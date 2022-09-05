@@ -1,6 +1,8 @@
 const userOTPVerification = require("../model/userOTPVerification");
 const bcrypt = require("bcrypt");
+const user = require("../model/userSchema");
 
+const db =require("../database/connection");
 
 exports.verify = async (req, res) => {
   try {
@@ -9,23 +11,22 @@ exports.verify = async (req, res) => {
       return res.status(422).json({ error: "Please fill all the fields" });
     }
 
-    const user = await userOTPVerification.findOne({ userId });
-    if (user) {
-      const expiresAt = user.expiresAt;
-      const validOTP = await bcrypt.compare(otp, user.otp);
+    const userLogin = await userOTPVerification.findOne({ userId });
+    if (userLogin) {
+      const expiresAt = userLogin.expiresAt;
+      const validOTP = await bcrypt.compare(otp, userLogin.otp);
 
-        const exp = expiresAt > Date.now();
-        console.log(exp)
+      const exp = expiresAt > Date.now();
+      console.log(exp);
 
       if (validOTP && exp) {
-          await userOTPVerification.deleteOne({ userId });
-          console.log("OTP verified and deleted");
-        res
-          .status(201)
-          .json({
-            message: "VERIFIED & User registered successfully",
-            dataSaved: user,
-          });
+        await user.updateOne({ userId: userId }, { $set: { isVerifed: true } });
+        await userOTPVerification.deleteOne({ userId });
+        console.log("OTP verified and deleted");
+        res.status(201).json({
+          message: "VERIFIED & User registered successfully",
+          dataSaved: user,
+        });
       } else {
         res.json({ status: "wFAILED", message: "Invalid OTP" });
       }

@@ -11,9 +11,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-exports.sendOTP = async ({ _id, email} ,  res) => {
+exports.sendOTP = async ({ _id, email }, res) => {
   try {
-    
     const otp = Math.floor(100000 + Math.random() * 900000);
     console.log(otp);
 
@@ -32,8 +31,8 @@ exports.sendOTP = async ({ _id, email} ,  res) => {
       createdAt: Date.now(),
       expiresAt: Date.now() + 5 * 60000, // 5 minutes
     });
-      await newOTPVerfication.save();
-      
+    await newOTPVerfication.save();
+
     // await transporter.sendMail(mailOptions, (err, data) => {
     //     if (err) {
     //     console.log("Error Occurs", err);
@@ -44,12 +43,14 @@ exports.sendOTP = async ({ _id, email} ,  res) => {
     //     }
     // });
 
-
+   
     res.json({
-      status: "PENDING",
+      status: "SUCCESS",
       message: "OTP sent to your email",
       data: { userId: _id, email: email },
     });
+
+    
   } catch (error) {
     console.log(error);
     res.json({

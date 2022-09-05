@@ -1,7 +1,5 @@
-
 const User = require("../model/userSchema");
-const {sendOTP} = require("../utilities/sendOTP");
-
+const { sendOTP } = require("../utilities/sendOTP");
 
 exports.signup = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -25,21 +23,14 @@ exports.signup = async (req, res) => {
       return res.status(422).json({ error: "User already exist" });
     } else {
       console.log("adding user to db");
-
-        const user = new User({ firstName, lastName, email, password });
-        // sendOTP({ _id: user._id, email: email }, res);
-        
+      const user = new User({ firstName, lastName, email, password });
       console.log("saving the data to db");
       await user.save();
       console.log("data saved");
-      res
-        .status(201)
-        .json({ message: "User registered successfully", dataSaved: user });
+      sendOTP({ _id: user._id, email: email }, res);
     }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err });
   }
-    
-    
-}
+};

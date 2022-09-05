@@ -12,14 +12,14 @@ const {signup}= require("../controllers/signup");
 const {verify}= require("../controllers/verify");
 const {signin}= require("../controllers/signin");
 const {logout}= require("../controllers/logout");
-const {resetPassword}= require("../controllers/resetPassword");
+const {forgotPassword}= require("../controllers/forgotPassword");
 
 
 router.post("/signup", signup);
 router.post("/verify", verify);
 router.post("/signin", signin);
 router.post("/logout", logout);
-router.post("/resetPassword", resetPassword);
+router.post("/forgotPassword", forgotPassword);
 
 
 
