@@ -1,22 +1,28 @@
 const User = require("../model/userSchema");
-const bcrypt = require("bcrypt");
-
 
 exports.resetPassword = async (req, res) => {
+    const { password, token } = req.body;
+    if (!password || !token) {
+        return res.status(422).json({ error: "Please fill all the fields" });
+    }
     try {
-        const { email, password } = req.body;
-        if (!email || !password)
-          return res.status(400).json({ error: "Please fill all the fields" });
-        
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ resetLink: token });
         if (user) {
-          const newPassword = await bcrypt.hash(password, 10);
-          await User.updateOne({ email: email }, { password: newPassword });
-          res.status(200).json({ message: "Password updated successfully" });
+        const obj = {
+            password,
+            resetLink: "",
+        };
+        User.findByIdAndUpdate(user._id, obj, (err, success) => {
+            if (err) {
+            return res.status(400).json({ error: "reset password error" });
+            } else {
+            return res.status(200).json({ message: "Password reset success" });
+            }
+        });
         } else {
-          res.status(400).json({ error: "User does not exist" });
+        return res.status(400).json({ error: "User with this token does not exist" });
         }
-      } catch (error) {
+    } catch (error) {
         console.log(error);
-      }
-}
+    }
+    }

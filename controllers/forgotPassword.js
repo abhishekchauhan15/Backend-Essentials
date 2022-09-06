@@ -55,5 +55,3 @@ exports.forgotPassword = async (req, res) => {
     console.log(error);
   }
 };
-//
-// //reset password

@@ -2,7 +2,6 @@ const userOTPVerification = require("../model/userOTPVerification");
 const bcrypt = require("bcrypt");
 const user = require("../model/userSchema");
 
-const db =require("../database/connection");
 
 exports.verify = async (req, res) => {
   try {
@@ -17,10 +16,11 @@ exports.verify = async (req, res) => {
       const validOTP = await bcrypt.compare(otp, userLogin.otp);
 
       const exp = expiresAt > Date.now();
-      console.log(exp);
+      // console.log(exp);
 
       if (validOTP && exp) {
-        await user.updateOne({ userId: userId }, { $set: { isVerifed: true } });
+        const result = await user.updateOne({ _id: userId }, { $set: { isVerifed: true } });
+        // console.log(result);
         await userOTPVerification.deleteOne({ userId });
         console.log("OTP verified and deleted");
         res.status(201).json({

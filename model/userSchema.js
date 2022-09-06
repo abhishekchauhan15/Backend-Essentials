@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  resetLink: {
+    data: String,
+    default: "",
+  },
   tokens: [
     {
       token: {

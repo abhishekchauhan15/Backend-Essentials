@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../model/userSchema");
 
 
-const authenticate = async (req, res, next) => {
+exports.authenticate = async (req, res, next) => {
   console.log("hello from authenticate");
 
   try {
@@ -28,8 +28,3 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-
-
-
-
-module.exports = authenticate;

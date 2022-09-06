@@ -33,15 +33,15 @@ exports.sendOTP = async ({ _id, email }, res) => {
     });
     await newOTPVerfication.save();
 
-    // await transporter.sendMail(mailOptions, (err, data) => {
-    //     if (err) {
-    //     console.log("Error Occurs", err);
-    //     res.status(500).json({ error: err });
-    //     } else {
-    //     console.log("Email sent!!!");
-    //     res.status(200).json({ message: "OTP sent to your email" });
-    //     }
-    // });
+    await transporter.sendMail(mailOptions, (err, data) => {
+        if (err) {
+        console.log("Error Occurs", err);
+        res.status(500).json({ error: err });
+        } else {
+        console.log("Email sent!!!");
+        res.status(200).json({ message: "OTP sent to your email" });
+        }
+    });
 
    
     res.json({
