@@ -53,8 +53,6 @@ Response (Example)
 `{{baseUrl}}/signup`
 
 Request
-
-
 ```json
 {
     "firstName": "abhi",
@@ -83,12 +81,11 @@ Response
 
 ### OTP Verification 
 
-`POST`
+### `POST`
 
 `{{baseUrl}}/verify`
 
 Request
-
 ```json 
 {
     "userId": "63175bb71a048098e3860d82",
@@ -98,7 +95,6 @@ Request
 
 
 Response Example
-
 ```json 
 {
     "message": "VERIFIED & User registered successfully"
@@ -125,12 +121,13 @@ Response
 ```json 
 {
     "message": "User signed in successfully",
-    "token": "eyJhbGciOiJIUzI1NiJ9.                 IjYzMTc1YmI3MWEwNDgwOThlMzg2MGQ4MiI.kSgrgRQQU3NV7GzflDZU0IQYtTH5RMWhronX9jtsBPE"
+    "token": "eyJhbGciOiJIUzI1NiJ9.IjYzMTc1YmI3MWEwNDgwOThlMzg2MGQ4MiI.kSgrgRQQU3NV7GzflDZU0IQYtTH5RMWhronX9jtsBPE"
 }
 
 ```
 
 <hr>
+<br>
 
 ### `POST` 
 
@@ -163,6 +160,7 @@ Response
 ```
 
 <hr>
+<br>
 
 ### `POST` 
 
@@ -187,5 +185,56 @@ Response
 ```
 
 <hr>
+<br>
+
+
+### `POST` 
+
+`{{baseUrl}}/resetPassword`
+
+Request
+
+
+```json
+{
+    "password":"asdfasdf",
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzE3NTIyNTFhMDQ4MDk4ZTM4NjBkNjgiLCJpYXQiOjE2NjI0NzMzMTcsImV4cCI6MTY2MjQ3MzYxN30.rNGNcjCl8jPDurOy1RsDEjURF1MiHXAFwMlLBow7sbc"
+}
+```
+
+Response
+```json 
+{
+    "message": "Password reset success"
+}
+
+```
+
+<hr>
+<br>
+
+
+### `POST` 
+
+`{{baseUrl}}/logout`
+
+Request
+
+
+```json
+{
+    "email":"a@gmail.com"
+}
+```
+
+Response
+```json 
+{
+    "message": "User logout",
+}
+```
+
+<hr>
+<br>
 
 
